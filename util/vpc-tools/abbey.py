@@ -535,7 +535,7 @@ extra_args_opts+=" -e@$extra_vars"
 
 env
 echo $0
-ANSIBLE_KEEP_REMOTE_FILES=1
+export ANSIBLE_KEEP_REMOTE_FILES=1
 
 ansible-playbook -vvvv -c local -i "localhost," $play.yml $extra_args_opts
 ansible-playbook -vvvv -c local -i "localhost," stop_all_edx_services.yml $extra_args_opts
