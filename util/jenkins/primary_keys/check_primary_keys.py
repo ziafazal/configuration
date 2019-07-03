@@ -57,19 +57,32 @@ class RDSBotoWrapper:
 
 def send_an_email(to_addr, from_addr, primary_keys_message, region):
     client = boto3.client('ses', region_name=region)
-
-    message = """
-    <p>Hello,</p>
-    <p>Primary keys of these table exhausted soon</p>
-    <table style='width:100%'>
-      <tr style='text-align: left'>
-        <th>Database</th>
-        <th>Table</th>
-        <th>Usage Percentage</th>
-        <th>Remaining Days</th>
-      </tr>
-    """
+    header = ""
+    message=''
+    first =True
+    DaysRemainingLabel = ''
     for item in range(len(primary_keys_message)):
+        if first:
+            first = False
+            DaysRemaining=primary_keys_message[item]['remaining_days'] if "remaining_days" in primary_keys_message[
+                    item] else None
+            if DaysRemaining is not None:
+                DaysRemainingLabel = """"<th>Remaining Days</th>"""
+
+            header = """
+                <p>Hello,</p>
+                <p>Primary keys of these table exhausted soon</p>
+                <table style='width:100%'>
+                  <tr style='text-align: left'>
+                    <th>Database</th>
+                    <th>Table</th>
+                    <th>Usage Percentage</th>
+                    {DaysRemainingLabel}
+                  </tr>
+                """.format(
+                DaysRemainingLabel=DaysRemainingLabel
+            )
+
         message += """
             <tr><td>{Database}</td>
             <td>{Table}</td>
@@ -83,6 +96,7 @@ def send_an_email(to_addr, from_addr, primary_keys_message, region):
         )
 
     message += """</table>"""
+    message = header + message
     client.send_email(
         Source=from_addr,
         Destination={
