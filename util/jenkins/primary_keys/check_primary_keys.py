@@ -57,8 +57,7 @@ class RDSBotoWrapper:
 
 def send_an_email(to_addr, from_addr, primary_keys_message, region):
     client = boto3.client('ses', region_name=region)
-    header = ""
-    message=''
+    message = ''
     flag =True
 
     DaysRemainingLabel = ''
@@ -92,7 +91,7 @@ def send_an_email(to_addr, from_addr, primary_keys_message, region):
             <th>Database</th>
             <th>Table</th>
             <th>Usage Percentage</th>
-            {DaysRemainingLabel}
+            <th>{DaysRemainingLabel}</th>
           </tr>
         """.format(
         DaysRemainingLabel=DaysRemainingLabel
