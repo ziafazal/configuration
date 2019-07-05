@@ -286,7 +286,7 @@ def get_metrics_and_calcuate_diff(namespace, metric_name, dimension, value, curr
         time_diff = datetime.now(timezone.utc) - max_value["Timestamp"]
         last_max_reading = max_value["Maximum"]
         consumed_keys_percentage = 100 - current_consumption
-        print(consumed_keys_percentage, current_consumption, last_max_reading, time_diff)
+        print(consumed_keys_percentage, current_consumption, last_max_reading, time_diff.days)
         if current_consumption > last_max_reading:
             current_usage = current_consumption - last_max_reading
             no_of_days = time_diff.days
