@@ -286,12 +286,17 @@ def get_metrics_and_calcuate_diff(namespace, metric_name, dimension, value, curr
         time_diff = datetime.now(timezone.utc) - max_value["Timestamp"]
         last_max_reading = max_value["Maximum"]
         consumed_keys_percentage = 100 - current_consumption
+        print("consuemd keys percentage: ",consumed_keys_percentage)
         print(consumed_keys_percentage, current_consumption, last_max_reading, time_diff.days)
         if current_consumption > last_max_reading:
             current_usage = current_consumption - last_max_reading
+            print("current_consumption: ",current_usage)
             no_of_days = time_diff.days
+            print("No of days: ", no_of_days)
             increase_over_time_period = current_usage/no_of_days
+            print("increaes over time period i,e current usage/no.of days", increase_over_time_period)
             days_remaining_before_exhaustion = consumed_keys_percentage/increase_over_time_period
+            print("days remaing before exhaustion : ",days_remaining_before_exhaustion)
             print("days remaining for {db} db are {days}".format(db=value,
                                                                  days=days_remaining_before_exhaustion))
     return days_remaining_before_exhaustion
