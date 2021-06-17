@@ -44,6 +44,7 @@ jobs:
         run: |
           git clone https://github.com/edx/testeng-ci.git
           cd $GITHUB_WORKSPACE/testeng-ci
+          ls
           pip install -r requirements.txt
       - name: create pull request
         env:
